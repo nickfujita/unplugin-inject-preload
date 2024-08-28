@@ -5,7 +5,7 @@
     "build": "rspack build"
   },
   "devDependencies": {
-    "@rspack/cli": "0.7.5",
+    "@rspack/cli": "1.0.0",
     "unplugin-inject-preload": "workspace:*"
   }
 }

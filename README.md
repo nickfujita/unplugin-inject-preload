@@ -205,7 +205,7 @@ export default {
 {
   "devDependencies": {
 -   "vite-plugin-inject-preload": "*",
-+   "unplugin-inject-preload": "^2.0.0",
++   "unplugin-inject-preload": "^3.0.0",
   }
 }
 ```
@@ -246,7 +246,7 @@ export default {
 {
   "devDependencies": {
 -   "@principalstudio/html-webpack-inject-preload": "*",
-+   "unplugin-inject-preload": "^2.0.0",
++   "unplugin-inject-preload": "^3.0.0",
   }
 }
 ```

@@ -30,9 +30,12 @@ export function htmlRspackPluginAdapter(args: {
     const assets = getAssetsForWebpackOrRspack(compilation)
     const tags: HtmlTagDescriptor[] = []
 
-    const publicPath = typeof compilation.outputOptions.publicPath === 'string'
-      ? compilation.outputOptions.publicPath
-      : ''
+    let publicPath = ''
+    if (typeof compilation.outputOptions.publicPath === 'string')
+      publicPath = compilation.outputOptions.publicPath
+    else if (typeof compilation.outputOptions.publicPath !== 'undefined')
+      publicPath = compilation.outputOptions.publicPath({}, undefined)
+
     const tagsAttributes = getTagsAttributes(
       assets,
       options,

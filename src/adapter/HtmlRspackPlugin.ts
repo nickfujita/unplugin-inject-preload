@@ -28,10 +28,14 @@ export function htmlRspackPluginAdapter(args: {
     const logger = compilation.getLogger(name)
     const assets = getAssetsForWebpackOrRspack(compilation)
     const tags: HtmlTagDescriptor[] = []
+
+    const publicPath = typeof compilation.outputOptions.publicPath === 'string' && compilation.outputOptions.publicPath === 'auto'
+      ? compilation.outputOptions.publicPath
+      : ''
     const tagsAttributes = getTagsAttributes(
       assets,
       options,
-      compilation.outputOptions.publicPath || '',
+      publicPath,
       logger,
     )
 
@@ -62,9 +66,12 @@ export function htmlRspackPluginAdapter(args: {
         )
       }
 
+      const source = new RawSource(updateSourceString)
+
       compilation.updateAsset(
         asset.name,
-        new RawSource(updateSourceString),
+        // @ts-expect-error Same source as webpack-sources
+        source,
         asset.info,
       )
     })

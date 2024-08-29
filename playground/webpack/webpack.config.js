@@ -1,7 +1,7 @@
 const path = require('node:path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const UnpluginInjectPreload = require('unplugin-inject-preload/webpack').default
+const UnpluginInjectPreload = require('unplugin-inject-preload/webpack')
 
 module.exports = {
   entry: path.resolve(__dirname, './../src/main.ts'),

@@ -117,7 +117,7 @@ describe('expect rspack with HtmlWebpackPlugin', () => {
   }
 })
 
-describe.skip('expect rspack with HtmlRspackPlugin', () => {
+describe('expect rspack with HtmlRspackPlugin', () => {
   for (const key in configs) {
     if (Object.prototype.hasOwnProperty.call(configs, key)) {
       const config = configs[key]

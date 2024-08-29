@@ -21,7 +21,8 @@ export function htmlRspackPluginAdapter(args: {
     if (!pluginInstances)
       return callback()
 
-    const filenames: string[] = pluginInstances.flatMap(item => item && '_options' in item ? [item._options.filename || 'index.html'] : [])
+    const filenames: string[] = pluginInstances.flatMap(item => item && '_args' in item ? [item._args.filename || 'index.html'] : [])
+
     if (filenames.length === 0)
       return callback()
 
@@ -29,7 +30,7 @@ export function htmlRspackPluginAdapter(args: {
     const assets = getAssetsForWebpackOrRspack(compilation)
     const tags: HtmlTagDescriptor[] = []
 
-    const publicPath = typeof compilation.outputOptions.publicPath === 'string' && compilation.outputOptions.publicPath === 'auto'
+    const publicPath = typeof compilation.outputOptions.publicPath === 'string'
       ? compilation.outputOptions.publicPath
       : ''
     const tagsAttributes = getTagsAttributes(

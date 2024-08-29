@@ -1,7 +1,7 @@
 const path = require('node:path')
-// const rspack = require('@rspack/core')
+const rspack = require('@rspack/core')
 const UnpluginInjectPreload = require('unplugin-inject-preload/rspack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 /** @type {import('@rspack/cli').Configuration} */
 const config = {
@@ -48,36 +48,36 @@ const config = {
     },
   },
   plugins: [
-    // new rspack.HtmlRspackPlugin({
-    //   minify: false,
-    //   templateContent: `
-    //   <!DOCTYPE html>
-    //   <html>
-    //     <head>
-    //       <!--__unplugin-inject-preload__-->
-    //     </head>
-    //     <body>
-    //       <h1>Hello World</h1>
-    //     </body>
-    //   </html>`,
-    // }),
-    new HtmlWebpackPlugin({
-      inject: false,
+    new rspack.HtmlRspackPlugin({
       minify: false,
-      templateContent: ({ htmlWebpackPlugin }) => `
+      templateContent: `
       <!DOCTYPE html>
       <html>
         <head>
           <!--__unplugin-inject-preload__-->
-          ${htmlWebpackPlugin.tags.headTags}
         </head>
         <body>
           <h1>Hello World</h1>
-          ${htmlWebpackPlugin.tags.bodyTags}
         </body>
-      </html>
-    `,
+      </html>`,
     }),
+    // new HtmlWebpackPlugin({
+    //   inject: false,
+    //   minify: false,
+    //   templateContent: ({ htmlWebpackPlugin }) => `
+    //   <!DOCTYPE html>
+    //   <html>
+    //     <head>
+    //       <!--__unplugin-inject-preload__-->
+    //       ${htmlWebpackPlugin.tags.headTags}
+    //     </head>
+    //     <body>
+    //       <h1>Hello World</h1>
+    //       ${htmlWebpackPlugin.tags.bodyTags}
+    //     </body>
+    //   </html>
+    // `,
+    // }),
     UnpluginInjectPreload({
       injectTo: 'custom',
       files: [

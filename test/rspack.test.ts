@@ -37,6 +37,9 @@ async function buildRspack(pluginConfig: Options, plugin: 'HtmlWebpackPlugin' | 
         clean: true,
         assetModuleFilename: '[name]-[hash][ext][query]',
       },
+      experiments: {
+        css: true,
+      },
       resolve: {
         extensions: ['.ts', '.js'],
         extensionAlias: {
@@ -52,6 +55,18 @@ async function buildRspack(pluginConfig: Options, plugin: 'HtmlWebpackPlugin' | 
           {
             test: /\.(woff|woff2|eot|ttf|otf)$/i,
             type: 'asset/resource',
+          },
+          {
+            test: /\.ts$/,
+            loader: 'builtin:swc-loader',
+            options: {
+              jsc: {
+                parser: {
+                  syntax: 'typescript',
+                },
+              },
+            },
+            type: 'javascript/auto',
           },
         ],
       },

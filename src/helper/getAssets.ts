@@ -1,5 +1,5 @@
 import type { OutputBundle } from 'rollup'
-import type { Compilation as WebpackCompilation } from 'webpack'
+import type { Asset, Compilation as WebpackCompilation } from 'webpack'
 import type { AssetsSet, UnpluginCompilation } from './../types'
 
 export function getAssetsForViteJS(bundle: OutputBundle) {
@@ -28,9 +28,12 @@ export function getAssetsForWebpackOrRspack(
   }
   // rspack
   else {
-    const assetsStats = compilation.getStats().toJson({ all: false, assets: true }).assets || []
-    assetsInfo = new Map(assetsStats.map(asset => [asset.name, asset.info]))
-    outputs = Array.from(assetsStats.map(asset => asset.name)).sort()
+    const assets = compilation.getAssets() || []
+    assetsInfo = new Map(
+      assets
+        .map(asset => [asset.name, asset.info as Asset]),
+    )
+    outputs = Array.from(assets.map(asset => asset.name)).sort()
   }
 
   outputs.forEach((output) => {

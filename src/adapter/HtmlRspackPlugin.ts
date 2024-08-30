@@ -21,17 +21,23 @@ export function htmlRspackPluginAdapter(args: {
     if (!pluginInstances)
       return callback()
 
-    const filenames: string[] = pluginInstances.flatMap(item => item && '_options' in item ? [item._options.filename || 'index.html'] : [])
+    const filenames: string[] = pluginInstances.flatMap(item => item && '_args' in item ? [item._args.filename || 'index.html'] : [])
+
     if (filenames.length === 0)
       return callback()
 
     const logger = compilation.getLogger(name)
     const assets = getAssetsForWebpackOrRspack(compilation)
     const tags: HtmlTagDescriptor[] = []
+
+    const publicPath = compilation.getPath(
+      compilation.outputOptions.publicPath || '',
+    )
+
     const tagsAttributes = getTagsAttributes(
       assets,
       options,
-      compilation.outputOptions.publicPath || '',
+      publicPath,
       logger,
     )
 
@@ -62,9 +68,12 @@ export function htmlRspackPluginAdapter(args: {
         )
       }
 
+      const source = new RawSource(updateSourceString)
+
       compilation.updateAsset(
         asset.name,
-        new RawSource(updateSourceString),
+        // @ts-expect-error Same source as webpack-sources
+        source,
         asset.info,
       )
     })

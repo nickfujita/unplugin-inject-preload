@@ -7,9 +7,9 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^5.5.3",
+    "typescript": "^5.5.4",
     "unplugin-inject-preload": "workspace:*",
-    "vite": "^5.3.4",
-    "vite-plugin-inspect": "^0.8.5"
+    "vite": "^5.4.2",
+    "vite-plugin-inspect": "^0.8.7"
   }
 }

@@ -1,5 +1,6 @@
+const path = require('node:path')
 const rspack = require('@rspack/core')
-const UnpluginInjectPreload = require('unplugin-inject-preload/rspack').default
+const UnpluginInjectPreload = require('unplugin-inject-preload/rspack')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 /** @type {import('@rspack/cli').Configuration} */
@@ -7,11 +8,14 @@ const config = {
   context: __dirname,
   entry: './../src/main.ts',
   output: {
-    publicPath: 'dist',
+    publicPath: path.join(__dirname, 'dist'),
     filename: 'main.js',
-    path: 'dist',
+    path: path.join(__dirname, 'dist'),
     clean: true,
     assetModuleFilename: '[name].[hash][ext][query]',
+  },
+  experiments: {
+    css: true,
   },
   module: {
     rules: [
@@ -23,7 +27,25 @@ const config = {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.ts$/,
+        loader: 'builtin:swc-loader',
+        options: {
+          jsc: {
+            parser: {
+              syntax: 'typescript',
+            },
+          },
+        },
+        type: 'javascript/auto',
+      },
     ],
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
+    extensionAlias: {
+      '.js': ['.js', '.ts'],
+    },
   },
   plugins: [
     new rspack.HtmlRspackPlugin({
